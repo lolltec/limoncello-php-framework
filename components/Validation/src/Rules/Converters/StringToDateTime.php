@@ -89,7 +89,11 @@ final class StringToDateTime extends ExecuteRule
         $parsedOrNull = null;
 
         if (($value = DateTimeImmutable::createFromFormat($format, $input)) !== false) {
-            $parsedOrNull = $value;
+            if (preg_match('/^Y[\-|\/]m[\-|\/]d$/i', $format)) {
+                $parsedOrNull = $value->setTime(0, 0, 0, 0);
+            } else {
+                $parsedOrNull = $value;
+            }
         }
 
         return $parsedOrNull;
