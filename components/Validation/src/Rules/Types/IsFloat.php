@@ -40,7 +40,9 @@ final class IsFloat extends ExecuteRule
      */
     public static function execute($value, ContextInterface $context, $primaryKeyValue = null): array
     {
-        return is_float($value) === true ?
+        return is_float($value) === true ||
+        (is_string($value) === true || is_numeric($value === true)) &&
+        filter_var($value, FILTER_VALIDATE_FLOAT) ?
             static::createSuccessReply($value) :
             static::createErrorReply($context, $value, ErrorCodes::IS_FLOAT, Messages::IS_FLOAT, []);
     }

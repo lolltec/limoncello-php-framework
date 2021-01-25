@@ -41,7 +41,9 @@ final class StringToFloat extends ExecuteRule
      */
     public static function execute($value, ContextInterface $context, $primaryKeyValue = null): array
     {
-        if (is_string($value) === true || is_numeric($value) === true) {
+        if (is_string($value) === true || is_numeric($value) === true &&
+            filter_var($value, FILTER_VALIDATE_FLOAT)
+        ) {
             return static::createSuccessReply((float)$value);
         }
 
